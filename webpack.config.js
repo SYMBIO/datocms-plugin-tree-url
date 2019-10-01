@@ -7,7 +7,7 @@ module.exports = {
   entry: ['babel-polyfill', `${__dirname}/src/index.jsx`],
   mode: process.env.NODE_ENV,
   output: {
-    path: __dirname + '/dist',
+    path: __dirname + '/public',
     filename: 'bundle.js'
   },
   devtool: 'source-map',
@@ -57,8 +57,8 @@ module.exports = {
       append: false,
       publicPath: '',
       assets: [
-        'https://unpkg.com/datocms-plugins-sdk@0.0.6/dist/sdk.js',
-        'https://unpkg.com/datocms-plugins-sdk@0.0.6/dist/sdk.css',
+        'https://unpkg.com/datocms-plugins-sdk/dist/sdk.js',
+        'https://unpkg.com/datocms-plugins-sdk/dist/sdk.css',
       ]
     }),
   ].filter(Boolean),
