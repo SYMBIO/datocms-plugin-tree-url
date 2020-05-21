@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import slugify from 'slugify';
-import camelCase from 'camel-case';
+import { camelCase } from 'camel-case';
 
 async function getUrl(plugin) {
   const token = plugin.parameters.global.datoCmsApiToken;
