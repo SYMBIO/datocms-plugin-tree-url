@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import slugify from 'slugify';
+import camelCase from 'camel-case';
 
 async function getUrl(plugin) {
   const token = plugin.parameters.global.datoCmsApiToken;
-  const apiName = plugin.itemType.attributes.api_key;
+  const apiName = camelCase(plugin.itemType.attributes.api_key);
 
   try {
     const { data } = await fetch('https://graphql.datocms.com/preview', {

@@ -100,6 +100,7 @@
     "yo": "^2.0.5"
   },
   "dependencies": {
+    "camel-case": "^4.1.1",
     "classname": "^0.0.0",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
