@@ -27,6 +27,9 @@ async function getUrl(plugin) {
 }
 
 async function setNewUrl(plugin) {
+  if (plugin.getFieldValue(plugin.fieldPath) === 'homepage') {
+    return;
+  }
   const parentUrl = await getUrl(plugin);
   // eslint-disable-next-line max-len
   const slug = slugify(plugin.getFieldValue(plugin.parameters.instance.sourceField, plugin.locale), {
