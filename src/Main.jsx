@@ -40,22 +40,24 @@ export default class Main extends Component {
 
     this.ref.current.addEventListener('keyup', () => {
       console.log(`change to ${this.ref.current.value}`);
+      setFieldValue(this.ref.current.value);
       this.setState({
         value: this.ref.current.value,
       });
-      setFieldValue(this.ref.current.value);
     });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { fieldValue } = this.props;
-    const { value } = this.state;
+    if (prevProps.fieldValue !== fieldValue) {
+      const { value } = this.state;
 
-    if (this.ref.current.value !== fieldValue) {
-      console.log('current value', this.ref.current.value);
-      console.log('state value', value);
-      console.log('incoming value', fieldValue);
-      this.updateValue(fieldValue);
+      if (this.ref.current.value !== fieldValue) {
+        console.log('current value', this.ref.current.value);
+        console.log('state value', value);
+        console.log('incoming value', fieldValue);
+        this.updateValue(fieldValue);
+      }
     }
   }
 
