@@ -67,7 +67,7 @@ export default class Main extends Component {
         <input
           type="text"
           defaultValue={value}
-          onChange={e => {
+          onChange={(e) => {
             this.setState({
               value: e.target.value,
             });
