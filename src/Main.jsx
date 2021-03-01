@@ -38,7 +38,7 @@ export default class Main extends Component {
       setNewUrl(plugin);
     });
 
-    this.ref.current.addEventListener('change', () => {
+    this.ref.current.addEventListener('keyup', () => {
       console.log(`change to ${this.ref.current.value}`);
       this.setState({
         value: this.ref.current.value,
