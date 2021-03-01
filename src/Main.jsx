@@ -39,7 +39,6 @@ export default class Main extends Component {
     });
 
     this.ref.current.addEventListener('keyup', () => {
-      console.log(`change to ${this.ref.current.value}`);
       setFieldValue(this.ref.current.value);
       this.setState({
         value: this.ref.current.value,
@@ -53,9 +52,6 @@ export default class Main extends Component {
       const { value } = this.state;
 
       if (this.ref.current.value !== fieldValue) {
-        console.log('current value', this.ref.current.value);
-        console.log('state value', value);
-        console.log('incoming value', fieldValue);
         this.updateValue(fieldValue);
       }
     }
