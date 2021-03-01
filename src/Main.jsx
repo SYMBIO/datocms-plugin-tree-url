@@ -25,7 +25,7 @@ export default class Main extends Component {
   }
 
   componentDidMount() {
-    const { plugin } = this.props;
+    const { plugin, setFieldValue } = this.props;
 
     const value = plugin.getFieldValue(plugin.fieldPath);
 
@@ -37,13 +37,20 @@ export default class Main extends Component {
     this.unsubscribe = plugin.addFieldChangeListener(sourceField, () => {
       setNewUrl(plugin);
     });
+
+    this.ref.current.addEventListener('change', () => {
+      this.setState({
+        value: this.ref.current.value,
+      });
+      setFieldValue(this.ref.current.value);
+    });
   }
 
   componentDidUpdate() {
     const { fieldValue } = this.props;
     const { value } = this.state;
 
-    if (this.ref.current && this.ref.current.value !== fieldValue) {
+    if (this.ref.current.value !== fieldValue) {
       console.log('current value', this.ref.current.value);
       console.log('state value', value);
       console.log('incoming value', fieldValue);
@@ -63,22 +70,11 @@ export default class Main extends Component {
   }
 
   render() {
-    const { setFieldValue } = this.props;
     const { value } = this.state;
 
     return (
       <div className="container">
-        <input
-          type="text"
-          defaultValue={value}
-          onChange={(e) => {
-            setFieldValue(e.target.value);
-            this.setState({
-              value: e.target.value,
-            });
-          }}
-          ref={this.ref}
-        />
+        <input type="text" defaultValue={value} ref={this.ref} />
       </div>
     );
   }
