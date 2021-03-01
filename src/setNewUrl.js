@@ -1,3 +1,4 @@
+import 'regene'
 import camelCase from 'camel-case';
 import slugify from 'slugify';
 
