@@ -70,10 +70,10 @@ export default class Main extends Component {
           type="text"
           defaultValue={value}
           onChange={(e) => {
+            setFieldValue(e.target.value);
             this.setState({
               value: e.target.value,
             });
-            setFieldValue(e.target.value);
           }}
           ref={this.ref}
         />
