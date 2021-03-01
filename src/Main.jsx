@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import connectToDatoCms from './connectToDatoCms';
 import './style.css';
@@ -37,13 +37,21 @@ export default class Main extends Component {
 
   render() {
     const { fieldValue, setFieldValue } = this.props;
+    const [value, setValue] = useState(fieldValue);
+
+    useEffect(() => {
+      if (fieldValue !== value) {
+        setValue(fieldValue);
+      }
+    }, [fieldValue]);
 
     return (
       <div className="container">
         <input
           type="text"
-          value={fieldValue}
+          value={value}
           onChange={(e) => {
+            setValue(e.target.value);
             setFieldValue(e.target.value);
           }}
         />
