@@ -39,6 +39,7 @@ export default class Main extends Component {
     });
 
     this.ref.current.addEventListener('change', () => {
+      console.log('change to' + this.ref.current.value);
       this.setState({
         value: this.ref.current.value,
       });
