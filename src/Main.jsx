@@ -42,7 +42,9 @@ export default class Main extends Component {
   componentDidUpdate() {
     const { fieldValue } = this.props;
 
-    if (this.ref.current.value !== fieldValue) {
+    if (this.ref.current && this.ref.current.value !== fieldValue) {
+      console.log('current value', this.ref.current.value);
+      console.log('incoming value', fieldValue);
       this.updateValue(fieldValue);
     }
   }
