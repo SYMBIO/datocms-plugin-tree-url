@@ -34,5 +34,6 @@ export default async function setNewUrl(plugin) {
     remove: /[^\w\s-]/g,
     lower: true,
   });
+  console.log('setting new url ' + parentUrl ? `${parentUrl}/${slug}` : slug);
   plugin.setFieldValue(plugin.fieldPath, parentUrl ? `${parentUrl}/${slug}` : slug);
 }
