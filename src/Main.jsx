@@ -1,50 +1,49 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import connectToDatoCms from './connectToDatoCms';
 import './style.css';
+import setNewUrl from './setNewUrl';
 
 @connectToDatoCms(plugin => ({
+  plugin,
   fieldValue: plugin.getFieldValue(plugin.fieldPath),
   setFieldValue: value => plugin.setFieldValue(plugin.fieldPath, value),
 }))
 export default class Main extends Component {
   static propTypes = {
+    plugin: PropTypes.object,
     fieldValue: PropTypes.string,
     setFieldValue: PropTypes.func,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: props.fieldValue,
-    };
-  }
+  componentDidMount() {
+    const { plugin } = this.props;
 
-  static getDerivedStateFromProps(props, state) {
-    if (props.fieldValue !== state.value) {
-      return {
-        value: props.fieldValue,
-      };
+    const value = plugin.getFieldValue(plugin.fieldPath);
+
+    if (value === '' || value === undefined) {
+      setNewUrl(plugin);
     }
 
-    // Return null to indicate no change to state.
-    return null;
+    const { sourceField } = plugin.parameters.instance;
+    this.unsubscribe = plugin.addFieldChangeListener(sourceField, () => {
+      setNewUrl(plugin);
+    });
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   render() {
-    const { value } = this.state;
-    const { setFieldValue } = this.props;
+    const { fieldValue, setFieldValue } = this.props;
 
     return (
       <div className="container">
         <input
           type="text"
-          value={value}
+          value={fieldValue}
           onChange={(e) => {
-            this.setState({
-              value: e.target.value,
-            });
             setFieldValue(e.target.value);
           }}
         />

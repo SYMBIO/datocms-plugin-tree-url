@@ -1,20 +1,20 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  entry: ['babel-polyfill', `${__dirname}/src/index.jsx`],
+  entry: `${__dirname}/src/index.jsx`,
   mode: process.env.NODE_ENV,
   output: {
-    path: `${__dirname}/public`,
+    path: `${__dirname}/dist`,
     filename: 'bundle.js',
   },
   devtool: 'source-map',
   devServer: {
     contentBase: './',
     disableHostCheck: true,
-    public: 'https://datocms-plugin-tree-url.localtunnel.me',
+    public: 'http://localhost:5000',
   },
   module: {
     rules: [
@@ -53,10 +53,10 @@ module.exports = {
       title: 'DatoCMS plugin',
       minify: isProduction,
     }),
-    new HtmlWebpackIncludeAssetsPlugin({
+    new HtmlWebpackTagsPlugin({
       append: false,
       publicPath: '',
-      assets: [
+      tags: [
         'https://unpkg.com/datocms-plugins-sdk/dist/sdk.js',
         'https://unpkg.com/datocms-plugins-sdk/dist/sdk.css',
       ],
