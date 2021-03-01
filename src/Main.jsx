@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import connectToDatoCms from './connectToDatoCms';
 import './style.css';
@@ -16,6 +16,13 @@ export default class Main extends Component {
     setFieldValue: PropTypes.func,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: props.plugin.getFieldValue(props.plugin.fieldPath),
+    };
+  }
+
   componentDidMount() {
     const { plugin } = this.props;
 
@@ -31,19 +38,28 @@ export default class Main extends Component {
     });
   }
 
+  componentDidUpdate() {
+    const { fieldValue } = this.props;
+    const { value } = this.state;
+
+    if (fieldValue !== value) {
+      this.updateValue(fieldValue);
+    }
+  }
+
   componentWillUnmount() {
     this.unsubscribe();
   }
 
-  render() {
-    const { fieldValue, setFieldValue } = this.props;
-    const [value, setValue] = useState(fieldValue);
+  updateValue(value) {
+    this.setState({
+      value,
+    });
+  }
 
-    useEffect(() => {
-      if (fieldValue !== value) {
-        setValue(fieldValue);
-      }
-    }, [fieldValue]);
+  render() {
+    const { setFieldValue } = this.props;
+    const { value } = this.state;
 
     return (
       <div className="container">
@@ -51,7 +67,9 @@ export default class Main extends Component {
           type="text"
           value={value}
           onChange={(e) => {
-            setValue(e.target.value);
+            this.setState({
+              value: e.target.value,
+            });
             setFieldValue(e.target.value);
           }}
         />
