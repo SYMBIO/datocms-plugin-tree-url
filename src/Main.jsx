@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import connectToDatoCms from './connectToDatoCms';
 import './style.css';
@@ -21,6 +21,7 @@ export default class Main extends Component {
     this.state = {
       value: props.plugin.getFieldValue(props.plugin.fieldPath),
     };
+    this.ref = createRef();
   }
 
   componentDidMount() {
@@ -40,9 +41,8 @@ export default class Main extends Component {
 
   componentDidUpdate() {
     const { fieldValue } = this.props;
-    const { value } = this.state;
 
-    if (fieldValue !== value) {
+    if (this.ref.current.value !== fieldValue) {
       this.updateValue(fieldValue);
     }
   }
@@ -52,6 +52,7 @@ export default class Main extends Component {
   }
 
   updateValue(value) {
+    this.ref.current.value = value;
     this.setState({
       value,
     });
@@ -65,13 +66,14 @@ export default class Main extends Component {
       <div className="container">
         <input
           type="text"
-          value={value}
-          onChange={(e) => {
+          defaultValue={value}
+          onChange={e => {
             this.setState({
               value: e.target.value,
             });
             setFieldValue(e.target.value);
           }}
+          ref={this.ref}
         />
       </div>
     );
