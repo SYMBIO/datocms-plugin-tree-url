@@ -49,8 +49,6 @@ export default class Main extends Component {
   componentDidUpdate(prevProps) {
     const { fieldValue } = this.props;
     if (prevProps.fieldValue !== fieldValue) {
-      const { value } = this.state;
-
       if (this.ref.current.value !== fieldValue) {
         this.updateValue(fieldValue);
       }
