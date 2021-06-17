@@ -16,7 +16,7 @@ async function getUrl(plugin) {
       body: JSON.stringify({
         query: `{ ${apiName}(locale: ${plugin.locale}, filter: { id: { eq: "${plugin.itemId}" } }) { parent { url } } }`,
       }),
-    }).then((res) => res.json());
+    }).then(res => res.json());
 
     return data[apiName].parent ? data[apiName].parent.url : '';
   } catch (e) {
