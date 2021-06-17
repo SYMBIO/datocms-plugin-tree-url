@@ -16,7 +16,7 @@ async function getUrl(plugin) {
       body: JSON.stringify({
         query: `{ ${apiName}(locale: ${plugin.locale}, filter: { id: { eq: "${plugin.itemId}" } }) { parent { url } } }`,
       }),
-    }).then(res => res.json());
+    }).then((res) => res.json());
 
     return data[apiName].parent ? data[apiName].parent.url : '';
   } catch (e) {
@@ -25,7 +25,8 @@ async function getUrl(plugin) {
 }
 
 export default async function setNewUrl(plugin) {
-  if (plugin.getFieldValue(plugin.fieldPath) === 'homepage') {
+  const value = plugin.getFieldValue(plugin.fieldPath);
+  if (value === 'homepage' || (typeof value === 'string' && value.indexOf(':') !== -1)) {
     return;
   }
   const parentUrl = await getUrl(plugin);
